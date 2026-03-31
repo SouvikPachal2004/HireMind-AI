@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HireMind AI – Interview Room</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/interview-room.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     STEP 1 — SETUP SCREEN
+══════════════════════════════════════════ -->
+<div id="setupScreen" class="screen active">
+  <div class="setup-container">
+
+    <div class="setup-header">
+      <a href="dashboard.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+      <div class="setup-logo"><span>🧠</span> HireMind <span class="ai-text">AI</span></div>
+    </div>
+
+    <div class="setup-card">
+      <div class="setup-icon-wrap">
+        <div class="setup-icon"><i class="fas fa-video"></i></div>
+      </div>
+      <h1 class="setup-title">AI Interview Room</h1>
+      <p class="setup-sub">Configure your session before we begin</p>
+
+      <!-- Interview Type -->
+      <div class="setup-section">
+        <label class="setup-label">Interview Type</label>
+        <div class="type-grid">
+          <div class="type-card active" data-type="voice" onclick="selectType(this)">
+            <i class="fas fa-microphone"></i>
+            <span>Voice</span>
+            <small>Audio only</small>
+          </div>
+          <div class="type-card" data-type="video" onclick="selectType(this)">
+            <i class="fas fa-video"></i>
+            <span>Video</span>
+            <small>Camera + Audio</small>
+          </div>
+          <div class="type-card" data-type="full" onclick="selectType(this)">
+            <i class="fas fa-star"></i>
+            <span>Full Mock</span>
+            <small>Resume-based</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Role Selection -->
+      <div class="setup-section">
+        <label class="setup-label">Target Role</label>
+        <div class="role-select-grid">
+          <div class="role-chip active" data-role="Software Developer" onclick="selectRole(this)">💻 Software Developer</div>
+          <div class="role-chip" data-role="Web Developer" onclick="selectRole(this)">🌐 Web Developer</div>
+          <div class="role-chip" data-role="Data Scientist" onclick="selectRole(this)">📊 Data Scientist</div>
+          <div class="role-chip" data-role="ML Engineer" onclick="selectRole(this)">🤖 ML Engineer</div>
+        </div>
+      </div>
+
+      <!-- Interview Category -->
+      <div class="setup-section">
+        <label class="setup-label">Question Category</label>
+        <div class="cat-grid">
+          <label class="cat-chip"><input type="checkbox" value="technical" checked /> Technical</label>
+          <label class="cat-chip"><input type="checkbox" value="behavioral" /> Behavioral</label>
+          <label class="cat-chip"><input type="checkbox" value="hr" /> HR</label>
+        </div>
+      </div>
+
+      <!-- Resume Upload (shown for Full Mock) -->
+      <div class="setup-section" id="resumeSection" style="display:none;">
+        <label class="setup-label">Upload Resume <span class="badge-required">Required for Full Mock</span></label>
+        <div class="resume-drop" id="resumeDrop" onclick="document.getElementById('resumeInput').click()"
+             ondragover="event.preventDefault()" ondrop="handleResumeDrop(event)">
+          <i class="fas fa-file-pdf"></i>
+          <span id="resumeDropText">Click or drag your resume (PDF/DOC)</span>
+          <input type="file" id="resumeInput" accept=".pdf,.doc,.docx" style="display:none" onchange="handleResumeFile(this)" />
+        </div>
+      </div>
+
+      <!-- Question Count -->
+      <div class="setup-section">
+        <label class="setup-label">Number of Questions: <strong id="qCountLabel">5</strong></label>
+        <input type="range" id="qCount" min="3" max="10" value="5" class="range-input"
+               oninput="document.getElementById('qCountLabel').textContent=this.value" />
+      </div>
+
+      <button class="btn-start-setup" onclick="requestPermissions()">
+        <i class="fas fa-shield-alt"></i> Check Permissions & Continue
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 2 — PERMISSION SCREEN
+══════════════════════════════════════════ -->
+<div id="permissionScreen" class="screen">
+  <div class="perm-container">
+    <div class="perm-card">
+      <div class="perm-icon"><i class="fas fa-lock-open"></i></div>
+      <h2>Allow Access</h2>
+      <p>HireMind AI needs access to your microphone and camera to conduct the interview.</p>
+      <div class="perm-list">
+        <div class="perm-item" id="permMic">
+          <i class="fas fa-microphone"></i>
+          <span>Microphone</span>
+          <div class="perm-status pending" id="micStatus"><i class="fas fa-clock"></i> Pending</div>
+        </div>
+        <div class="perm-item" id="permCam">
+          <i class="fas fa-video"></i>
+          <span>Camera</span>
+          <div class="perm-status pending" id="camStatus"><i class="fas fa-clock"></i> Pending</div>
+        </div>
+      </div>
+      <div class="perm-error" id="permError" style="display:none;"></div>
+      <button class="btn-perm" id="permBtn" onclick="grantPermissions()">
+        <i class="fas fa-check-circle"></i> Grant Permissions
+      </button>
+      <button class="btn-perm-skip" onclick="skipCamera()">Continue with Audio Only</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 3 — INTERVIEW ROOM
+══════════════════════════════════════════ -->
+<div id="interviewRoom" class="screen">
+
+  <!-- Top Bar -->
+  <div class="room-topbar">
+    <div class="room-logo"><span>🧠</span> HireMind <span class="ai-text">AI</span> — Interview Room</div>
+    <div class="room-meta">
+      <span class="room-badge" id="roomTypeBadge">Voice Interview</span>
+      <span class="room-badge role" id="roomRoleBadge">Software Developer</span>
+    </div>
+    <div class="room-controls-top">
+      <div class="room-timer" id="roomTimer">00:00</div>
+      <button class="ctrl-btn danger" onclick="endInterview()"><i class="fas fa-phone-slash"></i> End</button>
+    </div>
+  </div>
+
+  <!-- Main Layout -->
+  <div class="room-layout">
+
+    <!-- Left: Video + AI Avatar -->
+    <div class="room-left">
+
+      <!-- AI Interviewer -->
+      <div class="ai-panel">
+        <div class="ai-avatar-wrap">
+          <div class="ai-avatar" id="aiAvatar">
+            <div class="ai-face">🤖</div>
+            <div class="ai-rings">
+              <div class="ring r1"></div>
+              <div class="ring r2"></div>
+              <div class="ring r3"></div>
+            </div>
+          </div>
+          <div class="ai-speaking-badge" id="aiSpeakingBadge" style="display:none;">
+            <span class="speak-dot"></span> Speaking...
+          </div>
+        </div>
+        <div class="ai-name">HireMind AI Interviewer</div>
+      </div>
+
+      <!-- User Video -->
+      <div class="user-video-wrap" id="userVideoWrap">
+        <video id="userVideo" autoplay muted playsinline></video>
+        <div class="video-overlay">
+          <div class="video-name" id="videoUserName">You</div>
+          <div class="video-controls">
+            <button class="vid-ctrl" id="micBtn" onclick="toggleMic()" title="Toggle Mic">
+              <i class="fas fa-microphone" id="micIcon"></i>
+            </button>
+            <button class="vid-ctrl" id="camBtn" onclick="toggleCam()" title="Toggle Camera">
+              <i class="fas fa-video" id="camIcon"></i>
+            </button>
+          </div>
+        </div>
+        <div class="no-video-placeholder" id="noVideoPlaceholder">
+          <i class="fas fa-user-circle"></i>
+          <span id="noVideoName">You</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Chat / Q&A Panel -->
+    <div class="room-right">
+
+      <!-- Progress -->
+      <div class="room-progress-bar">
+        <div class="room-progress-fill" id="roomProgressFill" style="width:0%"></div>
+      </div>
+      <div class="room-progress-label">
+        Question <span id="qCurrent">0</span> of <span id="qTotal">0</span>
+      </div>
+
+      <!-- Chat -->
+      <div class="room-chat" id="roomChat">
+        <div class="room-chat-welcome">
+          <div class="rcw-icon">🎯</div>
+          <h3>Interview Starting...</h3>
+          <p>The AI interviewer will ask you questions. Speak your answer clearly.</p>
+        </div>
+      </div>
+
+      <!-- Transcript -->
+      <div class="transcript-box">
+        <div class="transcript-label"><i class="fas fa-microphone-alt"></i> Live Transcript</div>
+        <div class="transcript-text" id="transcriptText">Waiting for your response...</div>
+      </div>
+
+      <!-- Answer Controls -->
+      <div class="answer-controls" id="answerControls" style="display:none;">
+        <div class="answer-status" id="answerStatus">
+          <span class="rec-dot"></span> Recording your answer...
+        </div>
+        <div class="answer-btns">
+          <button class="btn-answer-skip" onclick="skipQuestion()"><i class="fas fa-forward"></i> Skip</button>
+          <button class="btn-answer-submit" onclick="submitVoiceAnswer()"><i class="fas fa-check"></i> Submit Answer</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════
+     STEP 4 — RESULTS SCREEN
+══════════════════════════════════════════ -->
+<div id="resultsScreen" class="screen">
+  <div class="results-container">
+    <div class="results-header">
+      <div class="results-icon">🎉</div>
+      <h1>Interview Complete!</h1>
+      <p>Here's your performance summary</p>
+    </div>
+    <div class="results-scores" id="resultsScores"></div>
+    <div class="results-qa" id="resultsQA"></div>
+    <div class="results-actions">
+      <button class="btn-results-primary" onclick="window.location.href='dashboard.html'">
+        <i class="fas fa-th-large"></i> Back to Dashboard
+      </button>
+      <button class="btn-results-secondary" onclick="window.location.reload()">
+        <i class="fas fa-redo"></i> New Interview
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="js/interview-room.js?v=20260331-4"></script>
+</body>
+</html>

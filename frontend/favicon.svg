@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded background -->
+  <rect width="64" height="64" rx="14" fill="url(#g)"/>
+  <!-- Brain shape (simplified) -->
+  <g fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left hemisphere -->
+    <path d="M32 18 C24 18 17 23 17 30 C17 34 19 37 22 39 C20 41 20 44 22 46 C24 48 27 48 29 47 C30 49 31 50 32 50"/>
+    <!-- Right hemisphere -->
+    <path d="M32 18 C40 18 47 23 47 30 C47 34 45 37 42 39 C44 41 44 44 42 46 C40 48 37 48 35 47 C34 49 33 50 32 50"/>
+    <!-- Center line -->
+    <line x1="32" y1="18" x2="32" y2="50"/>
+    <!-- Neural lines left -->
+    <path d="M22 30 C25 28 28 29 30 31"/>
+    <path d="M21 37 C24 35 27 36 30 38"/>
+    <!-- Neural lines right -->
+    <path d="M42 30 C39 28 36 29 34 31"/>
+    <path d="M43 37 C40 35 37 36 34 38"/>
+  </g>
+</svg>

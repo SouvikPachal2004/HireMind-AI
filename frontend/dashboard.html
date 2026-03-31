@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HireMind AI – Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="css/style.css?v=20260331-4" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark-theme">
+
+<!-- TOP NAVBAR -->
+<nav class="navbar">
+  <div class="nav-left">
+    <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    <div class="logo"><span class="logo-icon">🧠</span><span class="logo-text">HireMind <span class="logo-accent">AI</span></span></div>
+    <div class="nav-tabs">
+      <a class="nav-tab active" onclick="scrollToSection('overview')">Dashboard</a>
+      <a class="nav-tab" onclick="scrollToSection('mock-interview')">Mock Interview</a>
+      <a class="nav-tab" onclick="scrollToSection('resume')">Resume</a>
+      <a class="nav-tab" onclick="scrollToSection('progress')">Progress</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme"><i class="fas fa-moon" id="themeIcon"></i></button>
+    <div class="nav-user" onclick="scrollToSection('profile')">
+      <div class="user-avatar" id="navAvatar">AJ</div>
+      <span class="user-name" id="navName">User</span>
+    </div>
+    <button class="btn-logout" onclick="showLogoutModal()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+</nav>
+
+<div class="app-layout">
+<!-- LEFT SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">MAIN</div>
+    <a class="sidebar-item active" onclick="scrollToSection('overview')"><i class="fas fa-th-large"></i> Dashboard</a>
+    <a class="sidebar-item" onclick="scrollToSection('mock-interview')"><i class="fas fa-robot"></i> Mock Interview</a>
+    <a class="sidebar-item" href="interview-room.html"><i class="fas fa-play-circle"></i> Full Simulation</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">PRACTICE</div>
+    <a class="sidebar-item" onclick="scrollToSection('resume')"><i class="fas fa-file-alt"></i> ATS Checker</a>
+    <a class="sidebar-item" onclick="scrollToSection('progress')"><i class="fas fa-chart-line"></i> Progress</a>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">ACCOUNT</div>
+    <a class="sidebar-item" onclick="scrollToSection('profile')"><i class="fas fa-user-circle"></i> Profile</a>
+    <a class="sidebar-item" onclick="showLogoutModal()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+  <div class="sidebar-footer">
+    <div class="sidebar-tagline">🚀 Your All-in-One<br/>Interview Command Center</div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main-content" id="mainContent">
+
+  <!-- SECTION 1: OVERVIEW -->
+  <section id="overview" class="dashboard-section">
+    <div class="welcome-banner">
+      <div class="welcome-text">
+        <h1>Welcome back, <span class="accent" id="welcomeName">Alex Johnson</span> 👋</h1>
+        <p>Ready to ace your next interview? Let's get started.</p>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card" data-color="purple">
+        <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
+        <div class="stat-info"><div class="stat-value" id="totalSessions">—</div><div class="stat-label">Total Sessions</div></div>
+      </div>
+      <div class="stat-card" data-color="blue">
+        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+        <div class="stat-info"><div class="stat-value" id="completedInterviews">—</div><div class="stat-label">Completed Interviews</div></div>
+      </div>
+      <div class="stat-card" data-color="green">
+        <div class="stat-icon"><i class="fas fa-star"></i></div>
+        <div class="stat-info"><div class="stat-value" id="avgScore">—</div><div class="stat-label">Average Score</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: QUICK START ROLE SELECTION -->
+  <section id="role-select" class="dashboard-section">
+    <div class="section-header"><h2><i class="fas fa-bullseye"></i> Quick Start – Select Your Role</h2><p>Choose your target role to personalize your interview experience</p></div>
+    <div class="role-grid">
+      <div class="role-card active" data-role="Software Developer" onclick="selectRole(this)">
+        <div class="role-icon">💻</div><div class="role-name">Software Developer</div><div class="role-desc">DSA, System Design, OOP</div>
+      </div>
+      <div class="role-card" data-role="Web Developer" onclick="selectRole(this)">
+        <div class="role-icon">🌐</div><div class="role-name">Web Developer</div><div class="role-desc">HTML, CSS, JS, Frameworks</div>
+      </div>
+      <div class="role-card" data-role="Data Scientist" onclick="selectRole(this)">
+        <div class="role-icon">📊</div><div class="role-name">Data Scientist</div><div class="role-desc">ML, Stats, Python, SQL</div>
+      </div>
+      <div class="role-card" data-role="ML Engineer" onclick="selectRole(this)">
+        <div class="role-icon">🤖</div><div class="role-name">ML Engineer</div><div class="role-desc">Deep Learning, MLOps, NLP</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: AI MOCK INTERVIEW -->
+  <section id="mock-interview" class="dashboard-section">
+    <div class="section-header"><h2><i class="fas fa-robot"></i> AI Mock Interview</h2><p>Practice with AI-powered questions tailored to your role</p></div>
+    <div class="interview-panel">
+      <div class="interview-controls">
+        <div class="interview-type-tabs">
+          <button class="type-tab active" data-type="technical" onclick="setInterviewType(this)">Technical</button>
+          <button class="type-tab" data-type="behavioral" onclick="setInterviewType(this)">Behavioral</button>
+          <button class="type-tab" data-type="hr" onclick="setInterviewType(this)">HR</button>
+        </div>
+        <button class="btn-primary" onclick="startInterview()" id="startInterviewBtn"><i class="fas fa-play"></i> Start Interview</button>
+      </div>
+      <div class="chat-container" id="chatContainer">
+        <div class="chat-welcome">
+          <div class="chat-welcome-icon">🤖</div>
+          <h3>AI Interviewer Ready</h3>
+          <p>Select a question type and click "Start Interview" to begin your session.</p>
+        </div>
+      </div>
+      <div class="chat-input-area" id="chatInputArea" style="display:none;">
+        <textarea id="answerInput" placeholder="Type your answer here..." rows="3"></textarea>
+        <div class="chat-actions">
+          <span class="word-count" id="wordCount">0 words</span>
+          <button class="btn-secondary" onclick="skipQuestion()"><i class="fas fa-forward"></i> Skip</button>
+          <button class="btn-primary" onclick="submitAnswer()"><i class="fas fa-paper-plane"></i> Submit Answer</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: RESUME + ATS -->
+  <section id="resume" class="dashboard-section">
+    <div class="section-header"><h2><i class="fas fa-file-alt"></i> Resume & ATS Checker</h2><p>Upload your resume to get an ATS score and improvement tips</p></div>
+    <div class="resume-panel">
+      <div class="upload-zone" id="uploadZone" onclick="document.getElementById('resumeFile').click()" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Drag & drop your resume or <span class="accent">click to browse</span></p>
+        <small>Supports PDF, DOC, DOCX (Max 5MB)</small>
+        <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" style="display:none" onchange="uploadResume(this)" />
+      </div>
+      <div class="resume-results" id="resumeResults" style="display:none;">
+        <div class="ats-score-card">
+          <div class="ats-score-ring">
+            <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" class="ring-bg"/><circle cx="60" cy="60" r="50" class="ring-fill" id="atsRing" stroke-dasharray="0 314"/></svg>
+            <div class="ats-score-value" id="atsScoreValue">0</div>
+          </div>
+          <div class="ats-score-label">ATS Score</div>
+        </div>
+        <div class="resume-details">
+          <div class="detail-card"><h4><i class="fas fa-tags"></i> Detected Skills</h4><div class="skills-list" id="skillsList"></div></div>
+          <div class="detail-card"><h4><i class="fas fa-lightbulb"></i> Suggestions</h4><ul class="suggestions-list" id="suggestionsList"></ul></div>
+          <div class="detail-card"><h4><i class="fas fa-exclamation-triangle"></i> Missing Skills</h4><div class="skills-list missing" id="missingSkillsList"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: SKILL GAP ANALYZER -->
+  <section id="skill-gap" class="dashboard-section">
+    <div class="section-header"><h2><i class="fas fa-search"></i> Skill Gap Analyzer</h2><p>Identify what you need to learn for your target role</p></div>
+    <div class="skill-gap-panel">
+      <div class="gap-card"><h4><i class="fas fa-times-circle"></i> Missing Skills</h4><div class="gap-skills" id="gapMissing"></div></div>
+      <div class="gap-card"><h4><i class="fas fa-book"></i> Recommended Topics</h4><div class="gap-topics" id="gapTopics"></div></div>
+      <div class="gap-card"><h4><i class="fas fa-question-circle"></i> Suggested Questions</h4><ul class="gap-questions" id="gapQuestions"></ul></div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: CODING INTERVIEW -->
+  <section id="coding" class="dashboard-section" style="display:none;">
+    <div class="section-header"><h2><i class="fas fa-code"></i> Coding Interview</h2><p>Solve problems in our embedded code editor</p></div>
+    <div class="coding-panel">
+      <div class="coding-header">
+        <select class="select-input" id="problemSelect" onchange="loadProblem()">
+          <option value="twoSum">Two Sum – Easy</option>
+          <option value="reverseString">Reverse String – Easy</option>
+          <option value="fibonacci">Fibonacci – Medium</option>
+        </select>
+        <select class="select-input" id="langSelect">
+          <option value="javascript">JavaScript</option>
+          <option value="python">Python</option>
+          <option value="java">Java</option>
+        </select>
+      </div>
+      <div class="coding-layout">
+        <div class="problem-desc" id="problemDesc"></div>
+        <div class="editor-wrapper">
+          <div class="editor-toolbar">
+            <span class="editor-lang" id="editorLang">JavaScript</span>
+            <button class="btn-icon" onclick="clearEditor()" title="Clear"><i class="fas fa-trash"></i></button>
+          </div>
+          <textarea class="code-editor" id="codeEditor" spellcheck="false" placeholder="// Write your solution here..."></textarea>
+          <div class="editor-actions">
+            <button class="btn-secondary" onclick="runCode()"><i class="fas fa-play"></i> Run Code</button>
+            <button class="btn-primary" onclick="submitCode()"><i class="fas fa-upload"></i> Submit</button>
+          </div>
+        </div>
+      </div>
+      <div class="code-output" id="codeOutput" style="display:none;"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: VOICE INTERVIEW -->
+  <section id="voice" class="dashboard-section" style="display:none;">
+    <div class="section-header">
+      <h2><i class="fas fa-microphone"></i> Voice Interview</h2>
+      <p>Speak your answer aloud — get real-time transcript and AI feedback on delivery</p>
+    </div>
+    <div class="voice-panel">
+
+      <!-- Question display -->
+      <div class="voice-question-box" id="voiceQuestionBox">
+        <div class="vq-label"><i class="fas fa-robot"></i> Interview Question</div>
+        <div class="vq-text" id="voiceQuestion">Click "New Question" to get started.</div>
+        <button class="btn-secondary" onclick="loadVoiceQuestion()" id="newVoiceQBtn">
+          <i class="fas fa-sync-alt"></i> New Question
+        </button>
+      </div>
+
+      <!-- Visualizer + controls -->
+      <div class="voice-controls">
+        <div class="voice-visualizer" id="voiceVisualizer">
+          <div class="voice-bars" id="voiceBars">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <button class="btn-record" id="recordBtn" onclick="toggleRecording()">
+          <i class="fas fa-microphone" id="recordIcon"></i>
+          <span id="recordText">Start Recording</span>
+        </button>
+        <div class="record-timer" id="recordTimer">00:00</div>
+        <div class="voice-status" id="voiceStatus"></div>
+      </div>
+
+      <!-- Live transcript -->
+      <div class="voice-transcript-wrap">
+        <div class="vt-label">Live Transcript</div>
+        <div class="voice-transcript" id="voiceTranscript">
+          <p class="placeholder-text">Your speech will appear here in real time...</p>
+        </div>
+      </div>
+
+      <!-- Analyse button -->
+      <div style="text-align:center;margin:16px 0;">
+        <button class="btn-primary" id="analyseBtn" onclick="analyseVoice()" style="display:none;">
+          <i class="fas fa-chart-bar"></i> Analyse My Answer
+        </button>
+      </div>
+
+      <!-- Results -->
+      <div class="voice-results" id="voiceResults" style="display:none;">
+        <div class="voice-metric">
+          <div class="metric-label">Confidence</div>
+          <div class="metric-bar"><div class="metric-fill" id="confidenceFill" style="width:0%"></div></div>
+          <div class="metric-value" id="confidenceVal">0%</div>
+        </div>
+        <div class="voice-metric">
+          <div class="metric-label">Fluency</div>
+          <div class="metric-bar"><div class="metric-fill" id="fluencyFill" style="width:0%"></div></div>
+          <div class="metric-value" id="fluencyVal">0%</div>
+        </div>
+        <div class="voice-metric">
+          <div class="metric-label">Clarity</div>
+          <div class="metric-bar"><div class="metric-fill" id="clarityFill" style="width:0%"></div></div>
+          <div class="metric-value" id="clarityVal">0%</div>
+        </div>
+        <div class="voice-speed" id="voiceSpeed"></div>
+        <div class="voice-suggestions" id="voiceSuggestions"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 8: PERFORMANCE ANALYTICS -->
+  <section id="analytics" class="dashboard-section">
+    <div class="section-header"><h2><i class="fas fa-chart-bar"></i> Performance Analytics</h2><p>Track your improvement over time</p></div>
+    <div class="analytics-grid">
+      <div class="chart-card"><h4>Score Breakdown</h4><canvas id="radarChart"></canvas></div>
+      <div class="chart-card"><h4>Progress Over Time</h4><canvas id="lineChart"></canvas></div>
+      <div class="chart-card"><h4>Session Distribution</h4><canvas id="doughnutChart"></canvas></div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: AI REPORT GENERATOR -->
+  <section id="report" class="dashboard-section">
+    <div class="section-header"><h2><i class="fas fa-file-invoice"></i> AI Report Generator</h2><p>Get a comprehensive analysis of your interview performance</p></div>
+    <div class="report-panel">
+      <div class="report-generate">
+        <div class="report-icon">📋</div>
+        <h3>Generate Your Performance Report</h3>
+        <p>AI will analyze all your sessions and provide detailed insights</p>
+        <button class="btn-primary btn-large" onclick="generateReport()" id="generateReportBtn"><i class="fas fa-magic"></i> Generate Report</button>
+      </div>
+      <div class="report-content" id="reportContent" style="display:none;"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 10: PROGRESS TRACKER -->
+  <section id="progress" class="dashboard-section">
+    <div class="section-header"><h2><i class="fas fa-chart-line"></i> Progress Tracker</h2><p>Your interview journey timeline</p></div>
+    <div class="progress-panel">
+      <div class="timeline" id="progressTimeline"></div>
+      <div class="chart-card full-width"><h4>Improvement Graph</h4><canvas id="progressChart"></canvas></div>
+    </div>
+  </section>
+
+  <!-- SECTION 11: PROFILE -->
+  <section id="profile" class="dashboard-section">
+    <div class="section-header"><h2><i class="fas fa-user-circle"></i> Profile</h2><p>Manage your account and view history</p></div>
+    <div class="profile-panel">
+      <div class="profile-card">
+        <div class="profile-avatar-large" id="profileAvatarLarge">U</div>
+        <div class="profile-info">
+          <h3 id="profileName">User</h3>
+          <p id="profileEmail"></p>
+          <span class="profile-role-badge" id="profileRole">Software Developer</span>
+        </div>
+        <button class="btn-secondary" onclick="openEditModal()"><i class="fas fa-edit"></i> Edit Profile</button>
+      </div>
+      <div class="profile-stats">
+        <div class="pstat"><div class="pstat-val" id="pTotalSessions">—</div><div class="pstat-label">Sessions</div></div>
+        <div class="pstat"><div class="pstat-val" id="pAvgScore">—</div><div class="pstat-label">Avg Score</div></div>
+        <div class="pstat"><div class="pstat-val" id="pCompletedInterviews">—</div><div class="pstat-label">Interviews</div></div>
+      </div>
+      <div class="history-section"><h4><i class="fas fa-history"></i> Recent Sessions</h4><div class="history-list" id="historyList"></div></div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<!-- EDIT PROFILE MODAL -->
+<div class="modal-overlay" id="editModal" style="display:none;">
+  <div class="modal">
+    <div class="modal-header"><h3>Edit Profile</h3><button class="modal-close" onclick="closeEditModal()"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Full Name</label><input type="text" id="editName" class="form-input" /></div>
+      <div class="form-group"><label>Email</label><input type="email" id="editEmail" class="form-input" /></div>
+      <div class="form-group"><label>Target Role</label>
+        <select id="editRole" class="form-input">
+          <option>Software Developer</option><option>Web Developer</option><option>Data Scientist</option><option>ML Engineer</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn-secondary" onclick="closeEditModal()">Cancel</button><button class="btn-primary" onclick="saveProfile()">Save Changes</button></div>
+  </div>
+</div>
+
+<!-- LOGOUT MODAL -->
+<div class="modal-overlay" id="logoutModal" style="display:none;">
+  <div class="modal modal-sm">
+    <div class="modal-header"><h3>Confirm Logout</h3><button class="modal-close" onclick="closeLogoutModal()"><i class="fas fa-times"></i></button></div>
+    <div class="modal-body"><p>Are you sure you want to logout from HireMind AI?</p></div>
+    <div class="modal-footer"><button class="btn-secondary" onclick="closeLogoutModal()">Cancel</button><button class="btn-danger" onclick="logout()">Logout</button></div>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast"></div>
+
+<script src="js/app.js?v=20260331-4"></script>
+</body>
+</html>

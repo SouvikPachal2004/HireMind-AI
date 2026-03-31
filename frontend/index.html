@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HireMind AI – Smart Interview Preparation Platform</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="stylesheet" href="css/landing.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="nav" id="navbar">
+    <div class="nav-container">
+      <a class="nav-logo" href="#">
+        <span class="logo-brain">🧠</span>
+        <span class="logo-name">HireMind <span class="logo-ai">AI</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#roles">Roles</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+      </ul>
+      <div class="nav-auth">
+        <button class="theme-toggle-btn" onclick="toggleLandingTheme()" id="themeToggleBtn" title="Toggle theme">
+          <i class="fas fa-sun" id="landingThemeIcon"></i>
+        </button>
+        <button class="btn-login" onclick="openModal('loginModal')">Log In</button>
+        <button class="btn-signup" onclick="openModal('signupModal')">Sign Up Free</button>
+      </div>
+      <button class="nav-hamburger" onclick="toggleMobileNav()" id="hamburger">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#features" onclick="toggleMobileNav()">Features</a>
+      <a href="#how-it-works" onclick="toggleMobileNav()">How It Works</a>
+      <a href="#roles" onclick="toggleMobileNav()">Roles</a>
+      <a href="#testimonials" onclick="toggleMobileNav()">Reviews</a>
+      <div class="mobile-auth">
+        <button class="btn-login" onclick="openModal('loginModal')">Log In</button>
+        <button class="btn-signup" onclick="openModal('signupModal')">Sign Up Free</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg">
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
+      <div class="hero-orb orb-3"></div>
+      <div class="hero-grid"></div>
+    </div>
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge"><i class="fas fa-bolt"></i> AI-Powered Interview Prep — 100% Free</div>
+        <h1 class="hero-title">
+          Land Your Dream Job with<br/>
+          <span class="hero-highlight">HireMind AI</span>
+        </h1>
+        <p class="hero-subtitle">
+          Your all-in-one interview command center. Practice mock interviews, analyze your resume,
+          sharpen coding skills, and get AI-driven feedback — completely free, forever.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-hero-primary" onclick="openModal('signupModal')">
+            <i class="fas fa-rocket"></i> Get Started Free
+          </button>
+          <button class="btn-hero-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
+            <i class="fas fa-arrow-down"></i> Explore Features
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="hstat"><span class="hstat-val" id="statUsers">—</span><span class="hstat-label">Users</span></div>
+          <div class="hstat-divider"></div>
+          <div class="hstat"><span class="hstat-val" id="statInterviews">—</span><span class="hstat-label">Interviews</span></div>
+          <div class="hstat-divider"></div>
+          <div class="hstat"><span class="hstat-val" id="statSuccess">—</span><span class="hstat-label">Success Rate</span></div>
+        </div>
+      </div>
+
+      <!-- FLOATING FEATURE CARDS -->
+      <div class="hero-cards">
+        <div class="hcard hcard-1">
+          <div class="hcard-icon teal"><i class="fas fa-robot"></i></div>
+          <div class="hcard-text"><strong>AI Mock Interview</strong><span>Real-time feedback</span></div>
+        </div>
+        <div class="hcard hcard-2">
+          <div class="hcard-icon emerald"><i class="fas fa-file-alt"></i></div>
+          <div class="hcard-text"><strong>ATS Resume Check</strong><span>Score: 91%</span></div>
+        </div>
+        <div class="hcard hcard-3">
+          <div class="hcard-icon blue"><i class="fas fa-code"></i></div>
+          <div class="hcard-text"><strong>Coding Editor</strong><span>3/3 tests passed ✅</span></div>
+        </div>
+        <div class="hcard hcard-4">
+          <div class="hcard-icon amber"><i class="fas fa-microphone"></i></div>
+          <div class="hcard-text"><strong>Voice Analysis</strong><span>Confidence: 84%</span></div>
+        </div>
+        <div class="hcard hcard-5">
+          <div class="hcard-icon rose"><i class="fas fa-chart-line"></i></div>
+          <div class="hcard-text"><strong>Progress Tracker</strong><span>+18% this week</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUSTED BY -->
+  <div class="trusted-bar">
+    <div class="trusted-inner">
+      <span class="trusted-label">Trusted by engineers at</span>
+      <div class="trusted-logos">
+        <span>Google</span><span>Amazon</span><span>Microsoft</span>
+        <span>Meta</span><span>Netflix</span><span>Stripe</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-container">
+      <div class="section-tag">Everything You Need</div>
+      <h2 class="section-title">All-in-One Interview Preparation</h2>
+      <p class="section-sub">Every tool you need to ace your next interview — all free, all in one place.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="fc-icon teal"><i class="fas fa-robot"></i></div>
+          <h3>AI Mock Interviews</h3>
+          <p>Practice with an AI interviewer that asks real technical, behavioral, and HR questions tailored to your role.</p>
+          <ul class="fc-list">
+            <li><i class="fas fa-check"></i> Role-specific questions</li>
+            <li><i class="fas fa-check"></i> Real-time AI feedback</li>
+            <li><i class="fas fa-check"></i> Score & improvement tips</li>
+          </ul>
+        </div>
+        <div class="feature-card featured">
+          <div class="fc-badge">Most Used</div>
+          <div class="fc-icon blue"><i class="fas fa-file-alt"></i></div>
+          <h3>Resume & ATS Checker</h3>
+          <p>Upload your resume and get an instant ATS score, skill extraction, and actionable improvement suggestions.</p>
+          <ul class="fc-list">
+            <li><i class="fas fa-check"></i> ATS compatibility score</li>
+            <li><i class="fas fa-check"></i> Skill gap analysis</li>
+            <li><i class="fas fa-check"></i> Keyword optimization</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon emerald"><i class="fas fa-code"></i></div>
+          <h3>Coding Interview</h3>
+          <p>Solve real coding problems in our embedded editor with instant test case results and complexity analysis.</p>
+          <ul class="fc-list">
+            <li><i class="fas fa-check"></i> Multi-language support</li>
+            <li><i class="fas fa-check"></i> Test case runner</li>
+            <li><i class="fas fa-check"></i> Time & space complexity</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon amber"><i class="fas fa-microphone"></i></div>
+          <h3>Voice Interview</h3>
+          <p>Record your answers and get AI analysis on confidence, fluency, speaking speed, and clarity.</p>
+          <ul class="fc-list">
+            <li><i class="fas fa-check"></i> Speech-to-text</li>
+            <li><i class="fas fa-check"></i> Confidence scoring</li>
+            <li><i class="fas fa-check"></i> Fluency analysis</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon rose"><i class="fas fa-chart-bar"></i></div>
+          <h3>Performance Analytics</h3>
+          <p>Track your progress with detailed charts showing technical, communication, and confidence scores over time.</p>
+          <ul class="fc-list">
+            <li><i class="fas fa-check"></i> Visual progress charts</li>
+            <li><i class="fas fa-check"></i> Session history</li>
+            <li><i class="fas fa-check"></i> Improvement tracking</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <div class="fc-icon purple"><i class="fas fa-file-invoice"></i></div>
+          <h3>AI Report Generator</h3>
+          <p>Generate a comprehensive report with your strengths, weaknesses, and a personalized action plan.</p>
+          <ul class="fc-list">
+            <li><i class="fas fa-check"></i> Strengths & weaknesses</li>
+            <li><i class="fas fa-check"></i> Personalized suggestions</li>
+            <li><i class="fas fa-check"></i> Downloadable PDF</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="section-container">
+      <div class="section-tag">Simple Process</div>
+      <h2 class="section-title">Get Interview-Ready in 4 Steps</h2>
+      <p class="section-sub">Start practicing in minutes. No credit card. No setup.</p>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <div class="step-icon"><i class="fas fa-user-plus"></i></div>
+          <h3>Create Free Account</h3>
+          <p>Sign up in seconds with just your name and email. No credit card required.</p>
+        </div>
+        <div class="step-connector"><i class="fas fa-arrow-right"></i></div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <div class="step-icon"><i class="fas fa-bullseye"></i></div>
+          <h3>Select Your Role</h3>
+          <p>Choose your target role inside the dashboard to get personalized questions.</p>
+        </div>
+        <div class="step-connector"><i class="fas fa-arrow-right"></i></div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <div class="step-icon"><i class="fas fa-dumbbell"></i></div>
+          <h3>Practice Daily</h3>
+          <p>Use mock interviews, coding challenges, voice practice, and resume tools.</p>
+        </div>
+        <div class="step-connector"><i class="fas fa-arrow-right"></i></div>
+        <div class="step-card">
+          <div class="step-num">04</div>
+          <div class="step-icon"><i class="fas fa-trophy"></i></div>
+          <h3>Ace the Interview</h3>
+          <p>Walk in with confidence backed by data-driven, AI-powered preparation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLES -->
+  <section class="roles" id="roles">
+    <div class="section-container">
+      <div class="section-tag">Tailored For You</div>
+      <h2 class="section-title">Preparation for Every Tech Role</h2>
+      <p class="section-sub">Questions, challenges, and feedback customized for your specific career path.</p>
+      <div class="roles-grid">
+        <div class="role-card" onclick="openModal('signupModal')">
+          <div class="role-emoji">💻</div>
+          <h3>Software Developer</h3>
+          <p>DSA, System Design, OOP, Design Patterns</p>
+          <div class="role-tags"><span>Algorithms</span><span>System Design</span><span>OOP</span></div>
+        </div>
+        <div class="role-card" onclick="openModal('signupModal')">
+          <div class="role-emoji">🌐</div>
+          <h3>Web Developer</h3>
+          <p>HTML/CSS, JavaScript, Frameworks, Performance</p>
+          <div class="role-tags"><span>React</span><span>Node.js</span><span>CSS</span></div>
+        </div>
+        <div class="role-card" onclick="openModal('signupModal')">
+          <div class="role-emoji">📊</div>
+          <h3>Data Scientist</h3>
+          <p>ML, Statistics, Python, SQL, Visualization</p>
+          <div class="role-tags"><span>Python</span><span>ML</span><span>Statistics</span></div>
+        </div>
+        <div class="role-card" onclick="openModal('signupModal')">
+          <div class="role-emoji">🤖</div>
+          <h3>ML Engineer</h3>
+          <p>Deep Learning, MLOps, NLP, Model Deployment</p>
+          <div class="role-tags"><span>PyTorch</span><span>MLOps</span><span>NLP</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="section-container">
+      <div class="section-tag">Success Stories</div>
+      <h2 class="section-title">Loved by Developers Worldwide</h2>
+      <p class="section-sub">Real results from real users who prepared with HireMind AI.</p>
+      <div class="testimonials-grid">
+        <div class="tcard">
+          <div class="tcard-stars">★★★★★</div>
+          <p>"HireMind AI helped me land my dream job at a top tech company. The mock interviews were incredibly realistic and the feedback was spot-on."</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar">SR</div>
+            <div><div class="tcard-name">Sarah R.</div><div class="tcard-role">Software Engineer @ Google</div></div>
+          </div>
+        </div>
+        <div class="tcard featured-t">
+          <div class="tcard-stars">★★★★★</div>
+          <p>"The ATS checker alone is worth it. My resume score went from 58% to 91% after following the suggestions. Got 3x more callbacks!"</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar">MK</div>
+            <div><div class="tcard-name">Marcus K.</div><div class="tcard-role">Full Stack Dev @ Meta</div></div>
+          </div>
+        </div>
+        <div class="tcard">
+          <div class="tcard-stars">★★★★★</div>
+          <p>"The voice interview feature helped me overcome my nervousness. My confidence score improved from 52% to 84% in just two weeks."</p>
+          <div class="tcard-author">
+            <div class="tcard-avatar">PL</div>
+            <div><div class="tcard-name">Priya L.</div><div class="tcard-role">Data Scientist @ Amazon</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-orb cta-orb-1"></div>
+    <div class="cta-orb cta-orb-2"></div>
+    <div class="section-container cta-inner">
+      <div class="cta-free-badge"><i class="fas fa-infinity"></i> Always Free</div>
+      <h2>Ready to Ace Your Next Interview?</h2>
+      <p>Join 50,000+ developers preparing smarter with HireMind AI. No credit card. No limits.</p>
+      <button class="btn-hero-primary" onclick="openModal('signupModal')">
+        <i class="fas fa-rocket"></i> Start Preparing Now — It's Free
+      </button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="nav-logo"><span class="logo-brain">🧠</span><span class="logo-name">HireMind <span class="logo-ai">AI</span></span></div>
+        <p>Your all-in-one interview command center. Prepare smarter, interview better — completely free.</p>
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-github"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <div class="fl-col"><h4>Product</h4><a href="#">Features</a><a href="#">Changelog</a><a href="#">Roadmap</a></div>
+        <div class="fl-col"><h4>Resources</h4><a href="#">Blog</a><a href="#">Interview Tips</a><a href="#">Documentation</a></div>
+        <div class="fl-col"><h4>Company</h4><a href="#">About</a><a href="#">Careers</a><a href="#">Contact</a></div>
+        <div class="fl-col"><h4>Legal</h4><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Security</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 HireMind AI. All rights reserved.</span>
+      <span>Made with ❤️ for developers</span>
+    </div>
+  </footer>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="loginModal" style="display:none;" onclick="handleOverlayClick(event,'loginModal')">
+    <div class="auth-modal">
+      <button class="auth-close" onclick="closeModal('loginModal')"><i class="fas fa-times"></i></button>
+      <div class="auth-logo"><span class="logo-brain">🧠</span> HireMind AI</div>
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-sub">Log in to continue your interview prep</p>
+      <form class="auth-form" onsubmit="handleLogin(event)">
+        <div class="auth-field">
+          <label>Email Address</label>
+          <div class="auth-input-wrap">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="loginEmail" placeholder="you@example.com" required />
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <div class="auth-input-wrap pw-wrap">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="loginPassword" placeholder="Enter your password" required />
+            <button type="button" class="eye-toggle" onclick="togglePassword('loginPassword', this.querySelector('i'))">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div id="loginError" class="auth-error" style="display:none;"></div>
+        <div class="auth-row">
+          <label class="auth-check"><input type="checkbox" /> Remember me</label>
+          <a href="#" class="auth-link">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn-auth-primary"><i class="fas fa-sign-in-alt"></i> Log In</button>
+      </form>
+      <p class="auth-switch">Don't have an account? <a href="#" onclick="switchModal('loginModal','signupModal')">Sign up free</a></p>
+    </div>
+  </div>
+
+  <!-- SIGNUP MODAL -->
+  <div class="modal-overlay" id="signupModal" style="display:none;" onclick="handleOverlayClick(event,'signupModal')">
+    <div class="auth-modal">
+      <button class="auth-close" onclick="closeModal('signupModal')"><i class="fas fa-times"></i></button>
+      <div class="auth-logo"><span class="logo-brain">🧠</span> HireMind AI</div>
+      <h2 class="auth-title">Create Your Account</h2>
+      <p class="auth-sub">Start your free interview preparation journey</p>
+      <form class="auth-form" onsubmit="handleSignup(event)">
+        <div class="auth-field">
+          <label>Full Name</label>
+          <div class="auth-input-wrap">
+            <i class="fas fa-user"></i>
+            <input type="text" id="signupName" placeholder="Alex Johnson" required />
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>Email Address</label>
+          <div class="auth-input-wrap">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="signupEmail" placeholder="you@example.com" required />
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>Password</label>
+          <div class="auth-input-wrap pw-wrap">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="signupPassword" placeholder="Create a strong password (min 6 chars)" required />
+            <button type="button" class="eye-toggle" onclick="togglePassword('signupPassword', this.querySelector('i'))">
+              <i class="fas fa-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div id="signupError" class="auth-error" style="display:none;"></div>
+        <label class="auth-check terms-check"><input type="checkbox" required /> I agree to the <a href="#" class="auth-link">Terms of Service</a> and <a href="#" class="auth-link">Privacy Policy</a></label>
+        <button type="submit" class="btn-auth-primary"><i class="fas fa-user-plus"></i> Create Free Account</button>
+      </form>
+      <p class="auth-switch">Already have an account? <a href="#" onclick="switchModal('signupModal','loginModal')">Log in</a></p>
+    </div>
+  </div>
+
+  <div class="landing-toast" id="landingToast"></div>
+  <script src="js/landing.js?v=20260331-4"></script>
+</body>
+</html>
